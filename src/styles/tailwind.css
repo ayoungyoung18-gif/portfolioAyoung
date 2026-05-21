@@ -1,0 +1,17 @@
+@import 'tailwindcss' source(none);
+@source '../**/*.{js,ts,jsx,tsx}';
+
+@import 'tw-animate-css';
+
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  theme: {
+    extend: {
+      fontFamily: {
+        // 이제 font-sans를 쓰면 프리텐다드가 적용됩니다.
+        sans: ['Pretendard', 'sans-serif'],
+        serif: ['Noto Serif KR', 'serif'], // 한옥 느낌을 위해 명조체도 설정하면 좋아요
+      },
+    },
+  },
+}

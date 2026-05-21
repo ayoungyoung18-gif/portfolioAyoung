@@ -1,0 +1,22 @@
+/* 1. 최상단: 테일윈드 불러오기 */
+@import "tailwindcss";
+
+/* 2. 다음: 모든 외부 폰트 불러오기 (@import는 무조건 여기 모여있어야 합니다) */
+@import url("https://jsdelivr.net");
+@import url("https://googleapis.com");
+
+/* 3. 그다음: 테마 설정 (@theme) */
+@theme {
+  --font-sans: "Pretendard", sans-serif;
+  --font-serif: "Noto Serif KR", serif;
+  --color-brand-peach: #e8a398;
+}
+
+/* 4. 마지막: 기본 베이스 스타일 (@layer base) */
+@layer base {
+  body {
+    font-family: "Pretendard", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
