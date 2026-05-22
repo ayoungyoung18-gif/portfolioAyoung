@@ -45,36 +45,8 @@ export default function LivingRoomSection() {
           className="w-full h-full object-cover brightness-[0.95] contrast-[1.05]"
           loading="lazy"
         />
-        <div className="absolute inset-0 bg-black/20 backdrop-blur-[0.5px]" />
+        <div className="absolute inset-0 bg-black/10 backdrop-blur-[0.5px]" />
         <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/60" />
-      </div>
-
-      {/* 2. 햇살 효과 */}
-      <motion.div
-        className="absolute -top-10 -left-10 w-[700px] h-[700px] rounded-full blur-[120px] pointer-events-none"
-        style={{ background: "radial-gradient(circle, rgba(255,253,240,0.4) 0%, transparent 80%)" }}
-        animate={{ opacity: [0.5, 0.7, 0.5], scale: [1, 1.05, 1] }}
-        transition={{ duration: 6, repeat: Infinity }}
-      />
-
-      {/* 3. 조각보 커튼 효과 */}
-      <div className="absolute right-12 top-0 h-full w-48 flex gap-1 opacity-20 pointer-events-none">
-        {[...Array(3)].map((_, col) => (
-          <div key={col} className="flex-1 flex flex-col gap-1">
-            {[...Array(6)].map((_, row) => (
-              <motion.div
-                key={row}
-                className="w-full rounded-sm"
-                style={{
-                  height: `${12 + ((col + row) % 3) * 4}%`,
-                  backgroundColor: row % 2 === 0 ? "#F2E5B7" : "#E8A398",
-                }}
-                animate={{ opacity: [0.3, 0.6, 0.3] }}
-                transition={{ duration: 4, delay: (col + row) * 0.2, repeat: Infinity }}
-              />
-            ))}
-          </div>
-        ))}
       </div>
 
       {/* 4. 메인 콘텐츠 */}
@@ -85,9 +57,11 @@ export default function LivingRoomSection() {
       >
         <header className="mb-12 text-center select-none">
           <motion.span className="text-[10px] tracking-[0.6em] text-white/70 uppercase font-bold">
-            Project 03 / Kinetic Typography
+            프로젝트 셋_ 안채
           </motion.span>
-          <h2 className="text-5xl font-serif mt-3 text-white font-medium drop-shadow-2xl">안채</h2>
+          <h2 className="text-5xl font-pretendard mt-3 text-white font-medium drop-shadow-2xl">
+            애프터이팩트를 활용한 키네틱타이포영상
+          </h2>
           <div className="w-8 h-[1px] bg-[#E8A398] mx-auto mt-6 opacity-60" />
         </header>
 
@@ -199,19 +173,19 @@ export default function LivingRoomSection() {
             >
               {/* 상단 텍스트 정보 */}
               <div className="space-y-3">
-                <span className="text-[11px] font-sans font-black tracking-widest text-[#FFB0A3] block uppercase drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">
+                <span className="text-[11px] font-sans font-black tracking-widest text-[#FF5722] block uppercase drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">
                   Project 03
                 </span>
-                <h4 className="text-3xl font-serif text-white font-bold tracking-tight drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]">
+                <h4 className="text-3xl font-pretendard text-white font-bold tracking-tight drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]">
                   윤하 - 좋아해
                 </h4>
                 <p className="text-[14.5px] leading-relaxed text-white font-light tracking-wide break-keep pt-1 drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">
                   가사의 감정을 시각적 리듬으로 치환하는{" "}
-                  <span className="text-[#FFB0A3] font-bold underline underline-offset-4 decoration-white/30">
+                  <span className="text-[#FF5722] font-bold underline underline-offset-4 decoration-white/30">
                     키네틱 타이포그래피(Kinetic Typography)
                   </span>{" "}
                   작업입니다. 고백 직전의 설레는 온도를 안채의 화사하게 쏟아지는 햇살과 부드러운 파스텔 톤의 움직임으로
-                  Express했습니다.
+                  표현했습니다.
                 </p>
 
                 {/* ✨ [수정 반영] 직접 그린 작업물 하이라이트 어필 파트 */}
@@ -227,16 +201,18 @@ export default function LivingRoomSection() {
               {/* 인포 테이블 라인 */}
               <div className="space-y-2.5 pt-5 border-t border-white/10">
                 <div className="flex items-center gap-4 bg-white/[0.07] px-4 py-2.5 rounded-lg border border-white/10">
-                  <span className="text-[10px] uppercase tracking-widest text-[#FFB0A3] font-black w-14 shrink-0 drop-shadow-sm">
+                  <span className="text-[10px] uppercase tracking-widest text-[#FF5722] font-black w-14 shrink-0 drop-shadow-sm">
                     Focus
                   </span>
-                  <span className="text-xs text-white font-semibold">Motion Graphics & Hand-drawn Art</span>
+                  <span className="text-xs text-white font-semibold">
+                    Motion Graphics <br /> & Hand-drawn Art
+                  </span>
                 </div>
                 <div className="flex items-center gap-4 bg-white/[0.07] px-4 py-2.5 rounded-lg border border-white/10">
-                  <span className="text-[10px] uppercase tracking-widest text-[#FFB0A3] font-black w-14 shrink-0 drop-shadow-sm">
+                  <span className="text-[10px] uppercase tracking-widest text-[#FF5722] font-black w-14 shrink-0 drop-shadow-sm">
                     Duration
                   </span>
-                  <span className="text-xs text-white font-semibold">01:45</span>
+                  <span className="text-xs text-white font-semibold">42s</span>
                 </div>
               </div>
 
@@ -254,6 +230,30 @@ export default function LivingRoomSection() {
                 </span>
               </div>
             </div>
+          </div>
+        </div>
+      </motion.div>
+      <motion.div
+        className="absolute right-12 bottom-12 z-30 hidden lg:flex flex-col items-end gap-1.5 pointer-events-none select-none"
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 1, duration: 0.6 }}
+      >
+        <span className="text-[10px] font-mono font-black text-gray-400 uppercase tracking-widest opacity-85">
+          Scroll right to view projects
+        </span>
+        <div className="flex items-center gap-1.5">
+          <span className="text-[12px] font-bold text-[#FF5722] tracking-tight">
+            오른쪽으로 스크롤하여 프로젝트 보기
+          </span>
+          <div className="w-4 h-4 overflow-hidden relative flex items-center justify-center">
+            <motion.span
+              animate={{ x: [0, 4, 0] }}
+              transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
+              className="text-[#FF5722] font-black text-xs inline-block"
+            >
+              →
+            </motion.span>
           </div>
         </div>
       </motion.div>

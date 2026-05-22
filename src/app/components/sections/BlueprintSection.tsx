@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import hanokBlueprintVideo from "../../../assets/video/house.mp4";
 
 interface BlueprintSectionProps {
@@ -7,117 +7,89 @@ interface BlueprintSectionProps {
 }
 
 export default function BlueprintSection({ onNavigate }: BlueprintSectionProps) {
-  const videoRef = useRef<HTMLVideoElement>(null);
   const [hoveredRoom, setHoveredRoom] = useState<number | null>(null);
 
-  useEffect(() => {
-    if (videoRef.current) {
-      videoRef.current.playbackRate = 0.8;
-    }
-  }, []);
-
-  const colors = {
-    yellow: "#F2E5B7",
-    leaf: "#B9C9A9",
-    coral: "#E8A398",
-    blue: "#D1E2E8",
-    wood: "#E3D5CA",
-    deepMoss: "#4A4E40",
-    bg: "#F7F6F2",
-  };
-
+  // 퀵 셀렉션의 순서(0: About, 1: 전개도, 2: 사랑채, 3: 중정, 4: 안채, 5: 대청마루, 6: 행랑채)와 roomIndex를 완벽 동기화
   const rooms = [
     {
-      name: "About",
-      detail: "포트폴리오 이름과 기획의도",
-      why: "브랜드의 첫인상을 여는 진입 공간",
-      x: 40,
-      y: 40,
-      width: 220,
-      height: 160,
-      color: colors.yellow,
-      roomIndex: 0,
+      id: 0,
+      roomIndex: 0, // 0번 클릭 시 About으로 이동
+      num: "소개",
+      name: "한아영의 마케팅 철학",
+      detail: "about me",
+      why: "한국 고유의 정체성이 지닌 힘을 재해석하는 BRAND MARKETER 한아영의 본질과 다짐을 담은 방입니다.",
+      x: 30,
+      y: 30,
+      width: 300,
+      height: 190,
+      isDark: false,
     },
     {
-      name: "사랑채",
-      detail: "오설록 이벤트 배너",
-      why: "외부 손님과 교류하는 브랜드 팝업 공간",
-      x: 40,
-      y: 220,
-      width: 220,
-      height: 140,
-      color: colors.blue,
-      roomIndex: 2,
+      id: 1,
+      roomIndex: 2, // 2번 클릭 시 사랑채로 이동
+      num: "프로젝트 하나",
+      name: "오설록 이벤트 페이지 & 배너",
+      detail: "사랑채",
+      why: "전통 차 문화를 현대적 쉼으로 리포지셔닝한 '꿀잠 프로젝트' 기획 및 북촌점 단독 디저트 배너 제작.",
+      x: 30,
+      y: 250,
+      width: 300,
+      height: 170,
+      isDark: false,
     },
     {
-      name: "중정",
-      detail: "다이소 화장품 광고 영상",
-      why: "시선이 집중되는 한옥의 시각적 중심 무대",
-      x: 280,
-      y: 40,
-      width: 140,
-      height: 320,
-      color: colors.leaf,
-      roomIndex: 3,
+      id: 2,
+      roomIndex: 3, // 3번 클릭 시 중정으로 이동
+      num: "프로젝트 둘",
+      name: "다이소 본셉 프리미엄 광고",
+      detail: "중정",
+      why: "다이소 비타민C 라인의 고급화 포지셔닝 전략 수립 및 감각적인 시네마틱 무드의 광고 영상 제작",
+      x: 360,
+      y: 30,
+      width: 160,
+      height: 390,
+      isDark: false,
     },
     {
-      name: "행랑채",
-      detail: "SNS 활동 (블로그/인스타그램)",
-      why: "세상과 소통하며 일상을 기록하는 창구",
-      x: 440,
-      y: 40,
-      width: 220,
-      height: 160,
-      color: colors.coral,
-      roomIndex: 6,
+      id: 3,
+      roomIndex: 4, // 4번 클릭 시 안채로 이동
+      num: "프로젝트 셋",
+      name: "감성 키네틱 타이포그래피",
+      detail: "안채",
+      why: "After Effects를 활용한 윤하 '좋아해' 모션 그래픽 시각화 및 뉴미디어 콘텐츠 설계.",
+      x: 550,
+      y: 250,
+      width: 320,
+      height: 170,
+      isDark: false,
     },
     {
-      name: "안채",
-      detail: "윤하의좋아해 키네틱 타이포 영상",
-      why: "깊은 몰입감을 선사하는 예술적 중심 공간",
-      x: 440,
-      y: 220,
-      width: 220,
-      height: 140,
-      color: colors.yellow,
-      roomIndex: 4,
+      id: 4,
+      roomIndex: 5, // 5번 클릭 시 대청마루로 이동
+      num: "프로젝트 넷",
+      name: "한국가구공방 브랜드 웹사이트",
+      detail: "대청마루",
+      why: "한국 가구 공방의 장인정신을 D2C 커머스 사이트로 구현 및 타겟 맞춤형 고관여 SNS 마케팅 실행",
+      x: 30,
+      y: 450,
+      width: 840,
+      height: 100,
+      isDark: true,
     },
     {
-      name: "대청마루",
-      detail: "한국가구공방 사이트",
-      why: "공간을 연결하는 원목 기반의 개방형 플랫폼",
-      x: 40,
-      y: 380,
-      width: 620,
-      height: 80,
-      color: colors.wood,
-      roomIndex: 5,
+      id: 5,
+      roomIndex: 6, // 6번 클릭 시 행랑채로 이동
+      num: "프로젝트 다섯",
+      name: "라이프스타일 콘텐츠 아카이브",
+      detail: "행랑채",
+      why: "소비자 트렌드를 분석하여 브랜드 협찬 및 제휴를 직접 유치하고, 데이터 기반의 콘텐츠 최적화로 영향력을 확장 중인 자사 SNS 채널 아카이브입니다.",
+      x: 550,
+      y: 30,
+      width: 320,
+      height: 190,
+      isDark: false,
     },
   ];
-
-  // 💡 말풍선 좌표 및 정렬 기준 연산 함수
-  const getTooltipStyle = (index: number) => {
-    const room = rooms[index];
-    const padding = 40; // p-10 패딩 보정
-
-    // 대청마루는 상단 가림 방지를 위해 아래쪽 정중앙에 고정 배치
-    if (room.name === "대청마루") {
-      return {
-        position: "absolute" as const,
-        left: room.x + room.width / 2 + padding,
-        top: room.y + room.height + padding + 12,
-        transform: "translate(-50%, 0%)",
-      };
-    }
-
-    // 중정 및 일반 방들은 최상단 테두리선(y) 위쪽 정중앙에 고정 배치
-    return {
-      position: "absolute" as const,
-      left: room.x + room.width / 2 + padding,
-      top: room.y + padding - 12,
-      transform: "translate(-50%, -100%)",
-    };
-  };
 
   const handleRoomClick = (roomIndex: number) => {
     if (onNavigate) {
@@ -127,166 +99,187 @@ export default function BlueprintSection({ onNavigate }: BlueprintSectionProps) 
 
   return (
     <div className="w-screen h-screen flex items-center justify-center relative overflow-hidden font-sans">
-      {/* 배경 비디오 */}
+      <style>{`
+        @keyframes ultraSlowPan {
+          0% { transform: scale(1.01); }
+          50% { transform: scale(1.04); }
+          100% { transform: scale(1.01); }
+        }
+        .balanced-slow-bg {
+          animation: ultraSlowPan 120s ease-in-out infinite;
+        }
+      `}</style>
+
+      {/* 배경 비디오 레이어 */}
       <div className="absolute inset-0 z-0 bg-[#F7F6F2]">
         <video
-          ref={videoRef}
           autoPlay
           loop
           muted
           playsInline
-          className="w-full h-full object-cover"
-          style={{ filter: "saturate(0.8) brightness(1.02) contrast(0.9)" }}
+          className="w-full h-full object-cover balanced-slow-bg"
+          style={{ filter: "saturate(0.7) brightness(0.98) contrast(0.95)" }}
         >
           <source src={hanokBlueprintVideo} type="video/mp4" />
         </video>
-        <div className="absolute inset-0 bg-[#F7F6F2]/92 backdrop-blur-[1px] pointer-events-none" />
+        <div className="absolute inset-0 bg-[#F7F6F2]/50 backdrop-blur-[0.5px] pointer-events-none" />
       </div>
 
+      {/* 메인 레이아웃 콘텐트 */}
       <motion.div
-        className="relative z-10"
+        className="relative z-10 w-full max-w-6xl px-6 flex flex-col items-center justify-center h-full"
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         transition={{ duration: 1.5 }}
       >
         {/* 상단 타이틀 */}
-        <div className="text-center mb-10 select-none">
-          <span className="text-[10px] tracking-[0.5em] uppercase font-bold opacity-30 text-[#4A4E40]">
+        <div className="text-center mb-3 select-none">
+          <span className="text-[10px] tracking-[0.5em] uppercase font-bold opacity-40 text-[#4A4E40]">
             Spatial Layout Index
           </span>
-          <h2 className="text-5xl font-serif tracking-tight mt-2 text-[#4A4E40] font-bold">공간 전개도</h2>
-          <div className="w-8 h-[1px] mx-auto mt-6 bg-[#E8A398] opacity-40" />
+          <h2 className="text-4xl font-serif tracking-tight mt-1 text-[#4A4E40] font-bold">공간 전개도</h2>
+          <div className="w-10 h-[1px] mx-auto mt-3 bg-[#FF5722] opacity-60" />
         </div>
 
-        {/* 도면 영역 */}
-        <div className="relative p-10 bg-white/20 backdrop-blur-3xl rounded-[40px] border border-white/50 shadow-[0_20px_80px_rgba(0,0,0,0.02)]">
-          
-          {/* 초고속 스프링 고정형 말풍선 레이어 */}
-          <AnimatePresence>
-            {hoveredRoom !== null && (
-              <motion.div
-                key={hoveredRoom}
-                initial={{ opacity: 0, scale: 0.96, y: hoveredRoom === 5 ? -4 : 4 }} 
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.96, y: hoveredRoom === 5 ? -4 : 4 }}
-                transition={{ type: "spring", stiffness: 650, damping: 32 }} // 고속 스프링 모션
-                style={getTooltipStyle(hoveredRoom)}
-                className="z-50 pointer-events-none bg-[#4A4E40] text-[#F7F6F2] px-3 py-2 rounded-xl text-[11px] font-medium tracking-wide shadow-xl w-[210px] text-center break-keep flex flex-col gap-0.5"
-              >
-                {/* ✨ 타이틀을 '공간 기획'으로 변경 완료 */}
-                <span className="text-[9px] text-[#E8A398] font-bold uppercase tracking-wider">
-                  {rooms[hoveredRoom].name} 공간 기획
-                </span>
-                {rooms[hoveredRoom].why}
-                
-                {/* 말풍선 꼬리(Arrow) 방향 처리 */}
-                {rooms[hoveredRoom].name === "대청마루" ? (
-                  <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-full w-0 h-0 border-solid border-b-[#4A4E40] border-b-[5px] border-x-transparent border-x-[5px] border-t-0" />
-                ) : (
-                  <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-full w-0 h-0 border-solid border-t-[#4A4E40] border-t-[5px] border-x-transparent border-x-[5px] border-b-0" />
-                )}
-              </motion.div>
-            )}
-          </AnimatePresence>
+        {/* 도면 본체 박스 */}
+        <div className="relative p-6 bg-white/75 backdrop-blur-lg border border-gray-200/60 rounded-2xl shadow-2xl overflow-visible flex flex-col items-center gap-3">
+          {/* 고정형 설명창 레이어 */}
+          <div className="w-full h-12 flex items-center justify-center border-b border-gray-200/40 pb-1 select-none">
+            <AnimatePresence mode="wait">
+              {hoveredRoom !== null && rooms[hoveredRoom] ? (
+                <motion.div
+                  key={hoveredRoom}
+                  initial={{ opacity: 0, y: -3 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 3 }}
+                  transition={{ duration: 0.15 }}
+                  className="text-center max-w-2xl flex flex-col gap-0.5"
+                >
+                  <span className="text-[11px] text-[#FF5722] font-bold uppercase tracking-wider">
+                    {rooms[hoveredRoom].detail} 공간 기획
+                  </span>
+                  <p className="text-sm text-[#4A4E40] leading-relaxed break-keep font-medium">
+                    {rooms[hoveredRoom].why}
+                  </p>
+                </motion.div>
+              ) : (
+                <motion.p
+                  key="default"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 0.4 }}
+                  exit={{ opacity: 0 }}
+                  className="text-xs text-[#4A4E40] tracking-wide font-medium"
+                >
+                  도면의 각 공간에 마우스를 올리면 상세 기획 서정이 나타납니다.
+                </motion.p>
+              )}
+            </AnimatePresence>
+          </div>
 
           {/* 도면 SVG 본체 */}
-          <svg width="700" height="500" viewBox="0 0 700 500" className="overflow-visible relative">
+          <svg width="900" height="560" viewBox="0 0 900 560" className="overflow-visible relative z-10">
             <rect
-              x="20"
-              y="20"
-              width="660"
-              height="460"
-              rx="20"
+              x="10"
+              y="10"
+              width="880"
+              height="540"
               fill="none"
-              stroke={colors.deepMoss}
-              strokeWidth="0.5"
-              strokeDasharray="5 5"
-              opacity="0.1"
+              stroke="#1A1A1A"
+              strokeWidth="1.5"
+              strokeDasharray="6 4"
+              opacity="0.15"
             />
 
-            {rooms.map((room, index) => (
-              <g
-                key={index}
-                className="cursor-pointer"
-                onMouseEnter={() => setHoveredRoom(index)}
-                onMouseLeave={() => setHoveredRoom(null)}
-                onClick={() => handleRoomClick(room.roomIndex)}
-              >
-                <motion.rect
-                  x={room.x}
-                  y={room.y}
-                  width={room.width}
-                  height={room.height}
-                  rx="6"
-                  fill={room.color}
-                  stroke={colors.deepMoss}
-                  strokeWidth="1"
-                  strokeOpacity="0.03"
-                  whileHover={{ fill: "white", strokeOpacity: 0.4, scale: 1.01 }}
-                  transition={{ type: "spring", stiffness: 600, damping: 35 }}
-                />
-
-                <foreignObject
-                  x={room.x}
-                  y={room.y}
-                  width={room.width}
-                  height={room.height}
-                  className="pointer-events-none"
+            {rooms.map((room, index) => {
+              const isHovered = hoveredRoom === index;
+              return (
+                <g
+                  key={room.id}
+                  className="cursor-pointer"
+                  onMouseEnter={() => setHoveredRoom(index)}
+                  onMouseLeave={() => setHoveredRoom(null)}
+                  onClick={() => handleRoomClick(room.roomIndex)}
                 >
-                  <div className="w-full h-full flex flex-col items-center justify-center px-4 text-center">
-                    <motion.span
-                      className="font-bold tracking-tight text-[#4A4E40]"
-                      animate={{
-                        fontSize: hoveredRoom === index ? "12px" : "14px",
-                        opacity: hoveredRoom === index ? 0.3 : 0.8,
-                      }}
-                      transition={{ type: "spring", stiffness: 550, damping: 30 }}
-                    >
-                      {room.name}
-                    </motion.span>
+                  {/* 방 배경 영역 */}
+                  <motion.rect
+                    x={room.x}
+                    y={room.y}
+                    width={room.width}
+                    height={room.height}
+                    rx="6"
+                    fill={room.isDark ? "#1E2225" : isHovered ? "#FFF5EE" : "#FFFFFF"}
+                    stroke={isHovered ? "#FF5722" : "#4A4E40"}
+                    strokeWidth={isHovered ? "2.5" : "1.5"}
+                    strokeOpacity={room.isDark ? "1" : isHovered ? "1" : "0.4"}
+                    whileHover={{ scale: 1.003 }}
+                    transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                  />
 
-                    <AnimatePresence>
-                      {hoveredRoom === index && (
-                        <motion.span
-                          initial={{ opacity: 0, y: 4 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          exit={{ opacity: 0, y: 4 }}
-                          transition={{ type: "spring", stiffness: 550, damping: 30 }}
-                          className="text-[13px] font-black text-[#E8A398] leading-tight break-keep mt-1"
-                        >
-                          {room.detail}
-                        </motion.span>
-                      )}
-                    </AnimatePresence>
-                  </div>
-                </foreignObject>
-              </g>
-            ))}
+                  {/* HTML 요소를 SVG 내부에 안전하게 정렬하기 위한 ForeignObject 레이어 */}
+                  <foreignObject
+                    x={room.x}
+                    y={room.y}
+                    width={room.width}
+                    height={room.height}
+                    className="pointer-events-none"
+                  >
+                    <div className="w-full h-full flex flex-col items-center justify-center p-4 text-center select-none gap-1.5">
+                      {/* 1. 상단 소제목 */}
+                      <span
+                        className={`text-sm font-mono font-black tracking-wider ${
+                          room.isDark ? "text-[#FF5722]" : "text-gray-950 opacity-50"
+                        }`}
+                      >
+                        {room.num}
+                      </span>
 
-            {/* 소나무 포인트 */}
-            <g pointerEvents="none">
-              <circle
-                cx="350"
-                cy="310"
-                r="20"
-                fill="none"
-                stroke={colors.leaf}
-                strokeWidth="0.8"
-                strokeDasharray="4 4"
-                opacity="0.3"
-              />
-              <circle cx="350" cy="310" r="3.5" fill={colors.coral} opacity="0.6" />
-              <text
-                x="350"
-                y="345"
-                textAnchor="middle"
-                fill={colors.deepMoss}
-                className="text-[10px] font-bold tracking-[0.2em] opacity-30 uppercase"
-              >
-                소나무
-              </text>
-            </g>
+                      {/* 2. 메인 방 이름 */}
+                      <span
+                        className={`font-extrabold tracking-tight px-1 leading-snug break-keep transition-colors duration-200 ${
+                          room.detail === "대청마루" ? "text-lg" : "text-base"
+                        } ${room.isDark ? "text-white" : "text-[#4A4E40]"}`}
+                      >
+                        {room.name}
+                      </span>
+
+                      {/* 3. 하단 세부 장소 구분명 */}
+                      <span
+                        className={`text-sm font-medium tracking-wide ${
+                          room.isDark ? "text-gray-400" : "text-[#FF5722] font-bold"
+                        }`}
+                      >
+                        {room.detail}
+                      </span>
+                    </div>
+                  </foreignObject>
+                </g>
+              );
+            })}
           </svg>
+        </div>
+      </motion.div>
+      <motion.div
+        className="absolute right-12 bottom-12 z-30 hidden lg:flex flex-col items-end gap-1.5 pointer-events-none select-none"
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 1, duration: 0.6 }}
+      >
+        <span className="text-[10px] font-mono font-black text-gray-400 uppercase tracking-widest opacity-85">
+          Scroll right to view projects
+        </span>
+        <div className="flex items-center gap-1.5">
+          <span className="text-[12px] font-bold text-[#FF5722] tracking-tight">
+            오른쪽으로 스크롤하여 프로젝트 보기
+          </span>
+          <div className="w-4 h-4 overflow-hidden relative flex items-center justify-center">
+            <motion.span
+              animate={{ x: [0, 4, 0] }}
+              transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
+              className="text-[#FF5722] font-black text-xs inline-block"
+            >
+              →
+            </motion.span>
+          </div>
         </div>
       </motion.div>
     </div>
